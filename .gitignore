@@ -1,0 +1,6 @@
+/.env
+/storage/*
+!/storage/.gitkeep
+/vendor/
+/node_modules/
+.DS_Store
