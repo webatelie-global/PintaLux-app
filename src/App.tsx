@@ -44,9 +44,12 @@ function App() {
 
               return (
                 <div
-                  className={`nav-item ${index === 0 ? "active" : ""}`}
-                  key={item.label}
-                >
+  className={`nav-item ${activePage === item.label ? "active" : ""}`}
+  key={item.label}
+  onClick={() => setActivePage(item.label)}
+  role="button"
+  tabIndex={0}
+>
                   <Icon size={19} />
                   <span>{item.label}</span>
                 </div>
