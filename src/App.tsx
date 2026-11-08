@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   Bell,
@@ -23,7 +24,8 @@ const navigation = [
 ];
 
 function App() {
-    const [activePage, setActivePage] = useState("Dashboard");
+  const [activePage, setActivePage] = useState("Dashboard");
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -39,17 +41,25 @@ function App() {
           <span className="section-label">MAIN MENU</span>
 
           <nav className="navigation">
-            {navigation.map((item, index) => {
+            {navigation.map((item) => {
               const Icon = item.icon;
 
               return (
                 <div
-  className={`nav-item ${activePage === item.label ? "active" : ""}`}
-  key={item.label}
-  onClick={() => setActivePage(item.label)}
-  role="button"
-  tabIndex={0}
->
+                  className={`nav-item ${
+                    activePage === item.label ? "active" : ""
+                  }`}
+                  key={item.label}
+                  onClick={() => setActivePage(item.label)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActivePage(item.label);
+                    }
+                  }}
+                >
                   <Icon size={19} />
                   <span>{item.label}</span>
                 </div>
@@ -104,108 +114,124 @@ function App() {
           <div className="welcome-section">
             <div>
               <span className="eyebrow">PINTALUX MANAGEMENT</span>
+
               <h2>
-  {activePage === "Dashboard" ? "Welcome back, Admin" : activePage}
-</h2>
+                {activePage === "Dashboard"
+                  ? "Welcome back, Admin"
+                  : activePage}
+              </h2>
+
               <p>
-                Here is an overview of your company's work and activities.
+                {activePage === "Dashboard"
+                  ? "Here is an overview of your company's work and activities."
+                  : `Manage your company's ${activePage.toLowerCase()}.`}
               </p>
             </div>
 
             <div className="date-label">
               <CalendarDays size={17} />
-              <span>Dashboard overview</span>
+              <span>
+                {activePage === "Dashboard"
+                  ? "Dashboard overview"
+                  : activePage}
+              </span>
             </div>
           </div>
+
           {activePage === "Dashboard" ? (
-  <>
-          <div className="stats-grid">
-            <article className="stat-card">
-              <div className="stat-icon">
-                <ClipboardList size={21} />
-              </div>
-              <span className="stat-label">Total orders</span>
-              <strong>0</strong>
-              <span className="stat-note">All registered orders</span>
-            </article>
+            <>
+              <div className="stats-grid">
+                <article className="stat-card">
+                  <div className="stat-icon">
+                    <ClipboardList size={21} />
+                  </div>
+                  <span className="stat-label">Total orders</span>
+                  <strong>0</strong>
+                  <span className="stat-note">All registered orders</span>
+                </article>
 
-            <article className="stat-card">
-              <div className="stat-icon">
-                <CalendarDays size={21} />
-              </div>
-              <span className="stat-label">Upcoming jobs</span>
-              <strong>0</strong>
-              <span className="stat-note">Scheduled work</span>
-            </article>
+                <article className="stat-card">
+                  <div className="stat-icon">
+                    <CalendarDays size={21} />
+                  </div>
+                  <span className="stat-label">Upcoming jobs</span>
+                  <strong>0</strong>
+                  <span className="stat-note">Scheduled work</span>
+                </article>
 
-            <article className="stat-card">
-              <div className="stat-icon">
-                <CheckCircle2 size={21} />
-              </div>
-              <span className="stat-label">Completed jobs</span>
-              <strong>0</strong>
-              <span className="stat-note">Successfully completed</span>
-            </article>
+                <article className="stat-card">
+                  <div className="stat-icon">
+                    <CheckCircle2 size={21} />
+                  </div>
+                  <span className="stat-label">Completed jobs</span>
+                  <strong>0</strong>
+                  <span className="stat-note">Successfully completed</span>
+                </article>
 
-            <article className="stat-card">
-              <div className="stat-icon">
-                <Users size={21} />
+                <article className="stat-card">
+                  <div className="stat-icon">
+                    <Users size={21} />
+                  </div>
+                  <span className="stat-label">Employees</span>
+                  <strong>0</strong>
+                  <span className="stat-note">Registered workers</span>
+                </article>
               </div>
-              <span className="stat-label">Employees</span>
-              <strong>0</strong>
-              <span className="stat-note">Registered workers</span>
-            </article>
-          </div>
 
-          <div className="dashboard-grid">
-            <section className="content-card calendar-card">
+              <div className="dashboard-grid">
+                <section className="content-card calendar-card">
+                  <div className="card-heading">
+                    <div>
+                      <h3>Work calendar</h3>
+                      <p>Manage upcoming orders and scheduled jobs.</p>
+                    </div>
+                    <CalendarDays size={21} />
+                  </div>
+
+                  <div className="empty-state">
+                    <CalendarDays size={34} />
+                    <strong>Your calendar is ready</strong>
+                    <span>Scheduled jobs will appear here.</span>
+                  </div>
+                </section>
+
+                <section className="content-card activity-card">
+                  <div className="card-heading">
+                    <div>
+                      <h3>Recent activity</h3>
+                      <p>Latest updates from your team.</p>
+                    </div>
+                    <Bell size={21} />
+                  </div>
+
+                  <div className="empty-state">
+                    <ClipboardList size={34} />
+                    <strong>No activity yet</strong>
+                    <span>New orders and updates will appear here.</span>
+                  </div>
+                </section>
+              </div>
+            </>
+          ) : (
+            <section className="content-card">
               <div className="card-heading">
                 <div>
-                  <h3>Work calendar</h3>
-                  <p>Manage upcoming orders and scheduled jobs.</p>
+                  <h3>{activePage}</h3>
+                  <p>
+                    Manage your company's {activePage.toLowerCase()}.
+                  </p>
                 </div>
-                <CalendarDays size={21} />
               </div>
 
               <div className="empty-state">
-                <CalendarDays size={34} />
-                <strong>Your calendar is ready</strong>
-                <span>Scheduled jobs will appear here.</span>
+                <strong>{activePage} workspace</strong>
+                <span>
+                  Tools and information for this section will appear here.
+                </span>
               </div>
             </section>
+          )}
 
-            <section className="content-card activity-card">
-              <div className="card-heading">
-                <div>
-                  <h3>Recent activity</h3>
-                  <p>Latest updates from your team.</p>
-                </div>
-                <Bell size={21} />
-              </div>
-
-              <div className="empty-state">
-                <ClipboardList size={34} />
-                <strong>No activity yet</strong>
-                <span>New orders and updates will appear here.</span>
-              </div>
-            </section>
-          </div>
-  </>
-) : (
-  <section className="content-card">
-    <div className="card-heading">
-      <div>
-        <h3>{activePage}</h3>
-        <p>Manage your company's {activePage.toLowerCase()}.</p>
-      </div>
-    </div>
-
-    <div className="empty-state">
-      <strong>{activePage} workspace</strong>
-      <span>Tools and information for this section will appear here.</span>
-    </div>
-  </section>
-)}
           <footer className="dashboard-footer">
             <span>PintaLux © 2026</span>
             <span>Work management system</span>
