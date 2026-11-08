@@ -104,7 +104,9 @@ function App() {
           <div className="welcome-section">
             <div>
               <span className="eyebrow">PINTALUX MANAGEMENT</span>
-              <h2>Welcome back, Admin</h2>
+              <h2>
+  {activePage === "Dashboard" ? "Welcome back, Admin" : activePage}
+</h2>
               <p>
                 Here is an overview of your company's work and activities.
               </p>
