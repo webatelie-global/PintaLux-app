@@ -23,6 +23,7 @@ const navigation = [
 ];
 
 function App() {
+    const [activePage, setActivePage] = useState("Dashboard");
   return (
     <div className="app-shell">
       <aside className="sidebar">
