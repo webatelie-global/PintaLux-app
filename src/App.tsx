@@ -117,7 +117,8 @@ function App() {
               <span>Dashboard overview</span>
             </div>
           </div>
-
+          {activePage === "Dashboard" ? (
+  <>
           <div className="stats-grid">
             <article className="stat-card">
               <div className="stat-icon">
@@ -189,7 +190,22 @@ function App() {
               </div>
             </section>
           </div>
+  </>
+) : (
+  <section className="content-card">
+    <div className="card-heading">
+      <div>
+        <h3>{activePage}</h3>
+        <p>Manage your company's {activePage.toLowerCase()}.</p>
+      </div>
+    </div>
 
+    <div className="empty-state">
+      <strong>{activePage} workspace</strong>
+      <span>Tools and information for this section will appear here.</span>
+    </div>
+  </section>
+)}
           <footer className="dashboard-footer">
             <span>PintaLux © 2026</span>
             <span>Work management system</span>
